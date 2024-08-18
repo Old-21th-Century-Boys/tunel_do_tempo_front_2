@@ -1,0 +1,89 @@
+/* src/components/VideoIntro.css */
+
+/* Container principal do vídeo */
+.video-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  /* Vídeo de fundo */
+  .video-background {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Botão de play/pause centralizado */
+  .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo semi-transparente */
+    border-radius: 50%; /* Forma circular */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .play-button::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 0 10px 16px;
+    border-color: transparent transparent transparent white;
+  }
+  
+  /* Estilo do botão quando está pausado */
+  .play-button.paused::before {
+    border-width: 10px 0 10px 16px;
+    border-color: transparent transparent transparent white;
+  }
+  
+  /* Estilo do botão quando está tocando */
+  .play-button.playing::before {
+    width: 16px;
+    height: 16px;
+    border-width: 0;
+    background-color: white;
+    clip-path: polygon(0 0, 35% 0, 35% 100%, 0 100%, 65% 100%, 65% 0, 100% 0, 100% 100%, 0 100%);
+  }
+  
+  /* Controles na parte inferior direita */
+  .controls {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  
+  /* Botão de mute/unmute */
+  .mute-button {
+    font-size: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+  }
+  
+  /* Texto de instrução */
+  .press-enter {
+    color: white;
+    font-size: 16px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  

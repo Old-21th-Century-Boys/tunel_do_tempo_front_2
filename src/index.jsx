@@ -1,21 +1,26 @@
-// src/index.js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './index.css';
-import App from './App';
-import Login from './components/Login';
-import Register from './components/Register';
+// src/index.jsx
 
-ReactDOM.render(
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import VideoIntro from './components/VideoIntro';
+import './index.css'; 
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<VideoIntro />} />
+      <Route path="/login" element={<LoginPage />} />
+    </Routes>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <React.StrictMode>
     <Router>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
+      <App />
     </Router>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );

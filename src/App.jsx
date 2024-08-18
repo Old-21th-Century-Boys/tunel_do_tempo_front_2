@@ -1,13 +1,16 @@
-// src/App.jsx
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import VideoIntro from './components/VideoIntro';
+import LoginPage from './pages/LoginPage'; // Substitua com a página real
 
-const App = () => {
+function App() {
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold text-blue-500">
-        Bem-vindo ao Tunel do Tempo
-      </h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<VideoIntro />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </Router>
   );
 }
 
