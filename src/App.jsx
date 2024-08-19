@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import VideoIntro from './components/VideoIntro';
-import LoginPage from './pages/LoginPage'; // Substitua com a página real
+import LoginPage from './pages/LoginPage'; 
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<VideoIntro />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/home" element={<HomePage />} /> {/* Verifique se está com o caminho correto */}
       </Routes>
     </Router>
   );
