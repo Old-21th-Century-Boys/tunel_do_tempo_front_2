@@ -2,40 +2,35 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles/LoginPage.css';
 import { postLogin } from '../services/usuariosService';
+import { toast, Toaster } from 'react-hot-toast';
 
 function LoginPage() {
+
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [loading, setLoading] = useState(false);
-    const [modalMessage, setModalMessage] = useState('');
-    const [showModal, setShowModal] = useState(false);
 
-    const navigate = useNavigate(); // useNavigate para redirecionamento
+
+    const navigate = useNavigate(); 
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setShowModal(false);
 
         try {
             const response = await postLogin(email, senha);
             
             if (response.success) {
-                setModalMessage('Login realizado com sucesso!');
-                setShowModal(true);
+                toast.success('Login realizado com sucesso!');
 
-                // Após 1 segundo, redireciona para a Home
                 setTimeout(() => {
-                    setShowModal(false);
-                    navigate('/home'); // Redirecionar para a Home Page
+                    navigate('/login');
                 }, 1000);
             } else {
-                setModalMessage('Email ou senha incorretos.');
-                setShowModal(true);
+                toast.error('Email ou senha incorretos.');
             }
         } catch (error) {
-            setModalMessage('Ocorreu um erro ao tentar fazer o login.');
-            setShowModal(true);
+            toast.error('Ocorreu um erro ao tentar fazer o login.');
         } finally {
             setLoading(false);
         }
@@ -43,6 +38,7 @@ function LoginPage() {
 
     return (
         <div className="login-page">
+            <Toaster position="top-center" reverseOrder={false} />
             <div className="login-container">
                 <div className="login-image"></div>
                 <div className="login-form">
@@ -79,15 +75,6 @@ function LoginPage() {
                 </div>
             </div>
 
-            {/* Modal de resultado */}
-            {showModal && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <p>{modalMessage}</p>
-                        <button onClick={() => setShowModal(false)}>Fechar</button>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
