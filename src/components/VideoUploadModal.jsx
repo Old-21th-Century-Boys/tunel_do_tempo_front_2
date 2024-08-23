@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Modal, Box, Typography, TextField, Button, MenuItem, IconButton } from '@mui/material';
 import { VideoLibrary } from '@mui/icons-material';
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
+import { postVideosStore } from '../services/videosService';
 
 const style = {
   position: 'absolute',
@@ -31,11 +33,30 @@ const VideoUploadModal = ({ open, onClose, onSave }) => {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (video && title && date) {
-      onSave({ video, title, date, manos, isPublic });
-      toast.success('Vídeo salvo com sucesso!');
-      handleClose();
+      const videoData = {
+        titulo: title,
+        video: video,
+        IdMembros: manos,
+        data_video: date,
+        permitido: isPublic === 'true',
+      };
+
+      try {
+        const response = await postVideosStore(videoData);
+
+        if (response) {
+          onSave(response);
+          toast.success('Vídeo salvo com sucesso!');
+          handleClose();
+        } else {
+          throw new Error('Erro no upload do vídeo');
+        }
+      } catch (error) {
+        console.error('Erro ao salvar o vídeo:', error);
+        toast.error('Erro ao salvar o vídeo.');
+      }
     } else {
       toast.error('Por favor, preencha todos os campos.');
     }
@@ -52,104 +73,111 @@ const VideoUploadModal = ({ open, onClose, onSave }) => {
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <Box sx={style}>
-        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-          <IconButton
-            component="label"
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.8 }}
+        transition={{ duration: 0.3 }}
+      >
+        <Box sx={style}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+            <IconButton
+              component="label"
+              sx={{
+                width: 180,
+                height: 180,
+                borderRadius: '10px',
+                bgcolor: '#f0f0f0',
+                border: '2px dashed #ccc',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                color: '#a64900',
+                flexDirection: 'column',
+                padding: '10px',
+                textAlign: 'center',
+              }}
+            >
+              {video ? (
+                <Typography variant="subtitle1">{video.name}</Typography>
+              ) : (
+                <>
+                  <VideoLibrary sx={{ fontSize: 40 }} />
+                  <Typography variant="subtitle1">Clique Aqui</Typography>
+                  <Typography variant="subtitle2">Para adicionar um vídeo</Typography>
+                </>
+              )}
+              <input type="file" accept="video/*" onChange={handleVideoChange} hidden />
+            </IconButton>
+          </Box>
+          <TextField
+            label="Título"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            sx={{ borderRadius: '10px', bgcolor: '#fff' }}
+          />
+          <TextField
+            label="Data do Vídeo"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            type="date"
+            InputLabelProps={{ shrink: true }}
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            sx={{ borderRadius: '10px', bgcolor: '#fff' }}
+          />
+          <TextField
+            label="Selecione os manos"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            select
+            value={manos}
+            onChange={(e) => setManos(e.target.value)}
+            sx={{ borderRadius: '10px', bgcolor: '#fff' }}
+          >
+            <MenuItem value={1}>Mano 1</MenuItem>
+            <MenuItem value={2}>Mano 2</MenuItem>
+            <MenuItem value={3}>Mano 3</MenuItem>
+          </TextField>
+          <TextField
+            label="Público?"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            select
+            value={isPublic}
+            onChange={(e) => setIsPublic(e.target.value)}
+            sx={{ borderRadius: '10px', bgcolor: '#fff' }}
+          >
+            <MenuItem value="true">Sim</MenuItem>
+            <MenuItem value="false">Não</MenuItem>
+          </TextField>
+          <Button
+            variant="contained"
+            fullWidth
+            onClick={handleSave}
             sx={{
-              width: 180,
-              height: 180,
+              mt: 2,
+              bgcolor: '#BB4E00',
+              color: '#fff',
               borderRadius: '10px',
-              bgcolor: '#f0f0f0',
-              border: '2px dashed #ccc',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              color: '#a64900',
-              flexDirection: 'column',
-              padding: '10px',
-              textAlign: 'center',
+              padding: '10px 0',
+              textTransform: 'none',
+              '&:hover': {
+                bgcolor: '#E88239',
+              },
             }}
           >
-            {video ? (
-              <Typography variant="subtitle1">{video.name}</Typography>
-            ) : (
-              <>
-                <VideoLibrary sx={{ fontSize: 40 }} />
-                <Typography variant="subtitle1">Clique Aqui</Typography>
-                <Typography variant="subtitle2">Para adicionar um vídeo</Typography>
-              </>
-            )}
-            <input type="file" accept="video/*" onChange={handleVideoChange} hidden />
-          </IconButton>
+            Salvar
+          </Button>
         </Box>
-        <TextField
-          label="Título"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          sx={{ borderRadius: '10px', bgcolor: '#fff' }}
-        />
-        <TextField
-          label="Data do Vídeo"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          type="date"
-          InputLabelProps={{ shrink: true }}
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          sx={{ borderRadius: '10px', bgcolor: '#fff' }}
-        />
-        <TextField
-          label="Selecione os manos"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          select
-          value={manos}
-          onChange={(e) => setManos(e.target.value)}
-          sx={{ borderRadius: '10px', bgcolor: '#fff' }}
-        >
-          <MenuItem value="mano1">Mano 1</MenuItem>
-          <MenuItem value="mano2">Mano 2</MenuItem>
-          <MenuItem value="mano3">Mano 3</MenuItem>
-        </TextField>
-        <TextField
-          label="Público?"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          select
-          value={isPublic}
-          onChange={(e) => setIsPublic(e.target.value)}
-          sx={{ borderRadius: '10px', bgcolor: '#fff' }}
-        >
-          <MenuItem value="yes">Sim</MenuItem>
-          <MenuItem value="no">Não</MenuItem>
-        </TextField>
-        <Button
-          variant="contained"
-          fullWidth
-          onClick={handleSave}
-          sx={{
-            mt: 2,
-            bgcolor: '#BB4E00',
-            color: '#fff',
-            borderRadius: '10px',
-            padding: '10px 0',
-            textTransform: 'none',
-            '&:hover': {
-              bgcolor: '#E88239',
-            },
-          }}
-        >
-          Salvar
-        </Button>
-      </Box>
+      </motion.div>
     </Modal>
   );
 };

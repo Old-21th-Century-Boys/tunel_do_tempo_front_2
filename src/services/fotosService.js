@@ -11,15 +11,23 @@ export const getFotosShow = async (fotoId) => {
 }
 
 export const postFotosStore = async (data) => {
+    const formData = new FormData();
+
+    formData.append('titulo', data.titulo);
+    formData.append('data_foto', data.data_foto);
+    formData.append('IdMembros', data.IdMembros);
+    formData.append('permitido', data.permitido);
+
+    formData.append('photo', data.photo);
+
     const response = await fetch(ENDPOINTS.POST_FOTOS_STORE, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+        body: formData, 
     });
+
     return response.json();
 }
+
 
 export const putFotosUpdate = async (fotoId, data) => {
     const response = await fetch(ENDPOINTS.PUT_FOTOS_UPDATE(fotoId), {

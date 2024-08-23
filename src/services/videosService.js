@@ -11,15 +11,23 @@ export const getVideosShow = async (videoId) => {
 }
 
 export const postVideosStore = async (data) => {
+    const formData = new FormData();
+
+    formData.append('titulo', data.titulo);
+    formData.append('data_video', data.data_video);
+    formData.append('IdMembros', data.IdMembros);
+    formData.append('permitido', data.permitido);
+
+    formData.append('video', data.video);
+
     const response = await fetch(ENDPOINTS.POST_VIDEOS_STORE, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+        body: formData,
     });
+
     return response.json();
 }
+
 
 export const putVideosUpdate = async (videoId, data) => {
     const response = await fetch(ENDPOINTS.PUT_VIDEOS_UPDATE(videoId), {

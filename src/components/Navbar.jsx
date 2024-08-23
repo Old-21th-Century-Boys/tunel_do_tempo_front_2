@@ -1,10 +1,51 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faBook, faTree, faHome, faUsers, faHiking, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { motion, AnimatePresence } from 'framer-motion';
 import PhotoUploadModal from './PhotoUploadModal';
 import VideoUploadModal from './VideoUploadModal';
-import toast from 'react-hot-toast'; // Importar o toast
+import toast from 'react-hot-toast';
 import './Navbar.css';
+import { duration } from '@mui/material';
+
+const dropdownVariants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.8,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      type: 'spring',
+      stiffness: 300,
+      damping: 20,
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.8,
+    transition: {
+      duration: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: { 
+    opacity: 1, 
+    scale: 1, 
+    transition: {
+      type: 'spring',
+      duration: 0.5,
+      stiffness: 300,
+      damping: 20,
+    },
+  },
+};
 
 const Navbar = () => {
   const [items] = useState([
@@ -92,16 +133,22 @@ const Navbar = () => {
       </div>
 
       <div className={`nav-items ${menuOpen ? 'open' : ''}`}>
-        {items.map((item, i) => (
-          <a
-            key={i}
-            href={item.href}
-            className={`nav-item item-${i} ${item.active ? 'active' : ''}`}
-          >
-            {item.icon}
-            <span className="nav-item-text">{item.text}</span>
-          </a>
-        ))}
+        <AnimatePresence>
+          {items.map((item, i) => (
+            <motion.a
+              key={i}
+              href={item.href}
+              className={`nav-item item-${i} ${item.active ? 'active' : ''}`}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={itemVariants}
+            >
+              {item.icon}
+              <span className="nav-item-text">{item.text}</span>
+            </motion.a>
+          ))}
+        </AnimatePresence>
       </div>
 
       <div className="user-area" onClick={toggleDropdown}>
@@ -110,19 +157,28 @@ const Navbar = () => {
           alt="User Avatar"
           className={`user-avatar ${isSelected ? 'selected' : ''}`}
         />
-        {showDropdown && (
-          <div className="dropdown-menu" ref={dropdownRef}>
-            <ul>
-              <li onClick={handleOpenPhotoModal}>Adicionar Foto</li>
-              <li onClick={handleOpenVideoModal}>Adicionar Video</li>
-              <li>Adicionar História</li>
-              <li>Adicionar História Paralela</li>
-              <li>Adicionar Persona</li>
-              <li>Configurações</li>
-              <li>Sair</li>
-            </ul>
-          </div>
-        )}
+        <AnimatePresence>
+          {showDropdown && (
+            <motion.div
+              className="dropdown-menu"
+              ref={dropdownRef}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={dropdownVariants}
+            >
+              <ul>
+                <motion.li variants={itemVariants} onClick={handleOpenPhotoModal}>Adicionar Foto</motion.li>
+                <motion.li variants={itemVariants} onClick={handleOpenVideoModal}>Adicionar Video</motion.li>
+                <motion.li variants={itemVariants}>Adicionar História</motion.li>
+                <motion.li variants={itemVariants}>Adicionar História Paralela</motion.li>
+                <motion.li variants={itemVariants}>Adicionar Persona</motion.li>
+                <motion.li variants={itemVariants}>Configurações</motion.li>
+                <motion.li variants={itemVariants}>Sair</motion.li>
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       <PhotoUploadModal
