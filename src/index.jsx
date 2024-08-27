@@ -7,7 +7,17 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import VideoIntro from './components/VideoIntro';
 import SettingPage from './pages/SettingsPage';
-import './index.css'; 
+import FotosEVideos from './pages/FotosEVideosPage';
+import HistoriasPage from './pages/HistoriasPage';
+import HistoriasParalelasPage from './pages/HistoriasParalelasPage';
+import PessoasPage from './pages/PessoasPage';
+import RaizPage from './pages/RaizPage';
+import UploadHistoriasPage from './pages/UploadHistoriasPage';
+import UploadHistoriasParalelasPage from './pages/UploadHistoriasParalelasPage';
+import UploadPessoasPage from './pages/UploadPessoasPage';
+
+
+import './index.css';
 
 function App() {
   return (
@@ -15,7 +25,15 @@ function App() {
       <Route path="/" element={<VideoIntro />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/home" element={<HomePage />} />
-      <Route path="/settings" element={<SettingPage/>} />
+      <Route path="/settings" element={<SettingPage />} />
+      <Route path="/fotos-e-videos" element={<FotosEVideos />} />
+      <Route path="/historias" element={<HistoriasPage />} />
+      <Route path="/historias-paralelas" element={<HistoriasParalelasPage />} />
+      <Route path="/pessoas" element={<PessoasPage />} />
+      <Route path="/raiz" element={<RaizPage />} />
+      <Route path="/upload-historias" element={<UploadHistoriasPage />} />
+      <Route path="/upload-historias-paralelas" element={<UploadHistoriasParalelasPage />} />
+      <Route path="/upload-pessoas" element={<UploadPessoasPage />} />
     </Routes>
   );
 }

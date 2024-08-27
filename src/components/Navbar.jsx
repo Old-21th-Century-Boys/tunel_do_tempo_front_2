@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faBars, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import PhotoUploadModal from './PhotoUploadModal';
 import VideoUploadModal from './VideoUploadModal';
 import './styles/Navbar.css';
@@ -56,13 +57,14 @@ const Navbar = () => {
       <div className="nav-logo">Grupo Da Rua R</div>
 
       <div className={`nav-items ${menuOpen ? 'open' : ''}`}>
-        <div className="nav-item">Home</div>
-        <div className="nav-item">Raiz</div>
-        <div className="nav-item">Pessoas</div>
-        <div className="nav-item">Histórias</div>
-        <div className="nav-item">Fotos/Vídeos</div>
-        <div className="nav-item">Histórias Paralelas</div>
+        <Link to="/home" className="nav-item">Home</Link>
+        <Link to="/raiz" className="nav-item">Raiz</Link>
+        <Link to="/pessoas" className="nav-item">Pessoas</Link>
+        <Link to="/historias" className="nav-item">Histórias</Link>
+        <Link to="/fotos-e-videos" className="nav-item">Fotos/Vídeos</Link>
+        <Link to="/historias-paralelas" className="nav-item">Histórias Paralelas</Link>
       </div>
+
 
       <div className="user-area">
         <div className="hamburger-icon" onClick={toggleMenu}>
@@ -93,13 +95,13 @@ const Navbar = () => {
             transition={{ duration: 0.2 }}
           >
             <ul>
-              <li onClick={openPhotoModal}>Adicionar Foto</li> {/* Abre o modal ao clicar */}
+              <li onClick={openPhotoModal}>Adicionar Foto</li>
               <li onClick={openVideoModal}>Adicionar Vídeo</li>
-              <li>Adicionar História</li>
-              <li>Adicionar História Paralela</li>
-              <li>Adicionar Pessoa</li>
-              <li>Configurações</li>
-              <li>Sair</li>
+              <Link to="/upload-historias"><li>Adicionar História</li></Link>
+              <Link to="/upload-historias-paralelas"><li>Adicionar História Paralela</li></Link>
+              <Link to="/upload-pessoas"><li>Adicionar Pessoa</li></Link>
+              <Link to="/settings"><li>Configurações</li></Link>
+              <Link to="/login"><li>Sair</li></Link>
             </ul>
           </motion.div>
         )}

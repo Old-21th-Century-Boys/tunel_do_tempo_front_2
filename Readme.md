@@ -128,6 +128,22 @@ src/
 │       ├── LoginPage.jsx
 │       └── SettingsPage.jsx
 │
+├── pages/
+│   ├── styles/
+│   │   ├── LoginPage.css
+│   │   └── SettingsPage.css
+│   ├── FotosEVideosPage.jsx
+│   ├── HistoriasPage.jsx
+│   ├── HistoriasParalelasPage.jsx
+│   ├── HomePage.jsx
+│   ├── LoginPage.jsx
+│   ├── PessoasPage.jsx
+│   ├── RaizPage.jsx
+│   ├── SettingsPage.jsx
+│   ├── UploadHistoriasPage.jsx
+│   ├── UploadHistoriasParalelasPage.jsx
+│   └── UploadPessoasPage.jsx
+│
 ├── services/
 │   ├── endpoints.js
 │   ├── fotosService.js
@@ -157,6 +173,7 @@ src/
 ├── Raiz.jsxExemplo
 ├── Readme.md
 └── tailwind.config.js
+
 ```
 ## Scripts Disponíveis
 

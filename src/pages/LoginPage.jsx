@@ -70,7 +70,7 @@ function LoginPage() {
                         </button>
                     </form>
                     <p className="visitor">
-                        Visitante? Bem vindo! <a href="/visitor">clique aqui</a>
+                        Visitante? Bem vindo! <a href="/home">clique aqui</a>
                     </p>
                 </div>
             </div>
