@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './VideoIntro.css';
+import './styles/VideoIntro.css';
 import videoSrc from '../assets/videos/Abertura.mp4';
 
 const VideoIntro = () => {

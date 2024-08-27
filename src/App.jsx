@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import VideoIntro from './components/VideoIntro';
 import LoginPage from './pages/LoginPage'; 
 import HomePage from './pages/HomePage';
+import SettingsPage from './pages/SettingsPage';
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
       <Routes>
         <Route path="/" element={<VideoIntro />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/home" element={<HomePage />} /> {/* Verifique se está com o caminho correto */}
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/settings" element={<SettingsPage />} />
       </Routes>
     </Router>
   );
