@@ -157,7 +157,7 @@ src/
 ├── Raiz.jsxExemplo
 ├── Readme.md
 └── tailwind.config.js
-
+```
 ## Scripts Disponíveis
 
 Além do comando `start`, aqui estão outros scripts úteis:
