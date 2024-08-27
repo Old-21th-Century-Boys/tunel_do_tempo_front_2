@@ -120,13 +120,9 @@ src/
 │   └── VideoUploadModal.jsx
 │
 ├── fitis/
-│   └── pages/
-│       ├── styles/
-│       │   ├── LoginPage.css
-│       │   ├── SettingsPage.css
-│       │   └── HomePage.jsx
-│       ├── LoginPage.jsx
-│       └── SettingsPage.jsx
+│   └── stylesLogins/
+│       ├── 0.png
+│       └── 1.png
 │
 ├── pages/
 │   ├── styles/
